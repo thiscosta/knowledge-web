@@ -1,0 +1,95 @@
+<template>
+  <div>
+    <v-navigation-drawer
+      :style="{'background-color': theme.primary}"
+      v-model="drawer"
+      :mini-variant="mini"
+      absolute
+      dark
+      temporary
+    >
+      <div class="menu">
+        <v-text-field color="white" label="Digite para filtrar..." class="search-bar" v-model="treeFilter"/>
+        <Tree :data="treeData" :options="treeOptions" ref="tree" :filter="treeFilter"/>
+      </div>
+    </v-navigation-drawer>
+  </div>
+</template>
+
+<script>
+import Tree from "liquor-tree";
+
+export default {
+  props: ["drawer"],
+  components: { Tree },
+  data: () => ({
+    treeData: [
+      {
+        name: "Desenvolvimento de software",
+        children: [
+          {
+            name: "Web",
+            children: [
+              { name: "NodeJS" },
+              { name: "React" },
+              {
+                name: "VueJS",
+                children: [
+                  { name: "Vuetify", children: [{ name: "v-toolbar" }] },
+                  { name: "Directives" }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    treeOptions: {
+      propertyNames: { text: "name" },
+      filter: {
+        emptyText: "Categoria não encontrada :("
+      }
+    },
+    treeFilter: "",
+  }),
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
+  },
+  methods: {
+    onNodeSelect(node) {
+      this.$router.push({
+        name: 'articlesByCategory',
+        params: { id: node.id },
+      });
+    },
+  },
+  // mounted(){
+  //   this.$refs.tree.$on('node:selected', this.onNodeSelect)
+  // }
+};
+</script>
+
+<style>
+.tree-anchor {
+  color: #fff;
+}
+.tree-arrow.has-child:after {
+  border-color: #fff;
+}
+.tree-node.selected > .tree-content {
+  background-color: #474ec2 !important;
+}
+.tree-content:hover {
+  background-color: #474ec2 !important;
+}
+.search-bar {
+  margin: 15px;
+}
+.tree-filter-empty{
+  color: white;
+  font-size: 17px;
+  text-align: center;
+}
+</style>
