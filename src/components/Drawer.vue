@@ -3,14 +3,18 @@
     <v-navigation-drawer
       :style="{'background-color': theme.primary}"
       v-model="drawer"
-      :mini-variant="mini"
       absolute
       dark
       temporary
     >
       <div class="menu">
-        <v-text-field color="white" label="Digite para filtrar..." class="search-bar" v-model="treeFilter"/>
-        <Tree :data="treeData" :options="treeOptions" ref="tree" :filter="treeFilter"/>
+        <v-text-field
+          color="white"
+          label="Digite para filtrar..."
+          class="search-bar"
+          v-model="treeFilter"
+        />
+        <Tree :data="treeData()" :options="treeOptions" ref="tree" :filter="treeFilter"/>
       </div>
     </v-navigation-drawer>
   </div>
@@ -18,56 +22,40 @@
 
 <script>
 import Tree from "liquor-tree";
+import axios from 'axios'
 
 export default {
   props: ["drawer"],
   components: { Tree },
   data: () => ({
-    treeData: [
-      {
-        name: "Desenvolvimento de software",
-        children: [
-          {
-            name: "Web",
-            children: [
-              { name: "NodeJS" },
-              { name: "React" },
-              {
-                name: "VueJS",
-                children: [
-                  { name: "Vuetify", children: [{ name: "v-toolbar" }] },
-                  { name: "Directives" }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
     treeOptions: {
-      propertyNames: { text: "name" },
+      propertyNames: { text: "name", id: '_id' },
       filter: {
         emptyText: "Categoria não encontrada :("
       }
     },
-    treeFilter: "",
+    treeFilter: ""
   }),
   computed: {
     theme() {
       return this.$store.getters.getTheme;
-    },
+    }
   },
   methods: {
     onNodeSelect(node) {
       this.$router.push({
-        name: 'articlesByCategory',
-        params: { id: node.id },
+        name: "articlesByCategory",
+        params: { id: node.id }
       });
     },
+    async treeData() {
+      const tree = await axios.get('http://localhost:4040/categories/tree').then(res => res.data)
+      return tree
+    }
   },
-  // mounted(){
-  //   this.$refs.tree.$on('node:selected', this.onNodeSelect)
-  // }
+  mounted(){
+    this.$refs.tree.$on('node:selected', this.onNodeSelect)
+  }
 };
 </script>
 
@@ -87,7 +75,7 @@ export default {
 .search-bar {
   margin: 15px;
 }
-.tree-filter-empty{
+.tree-filter-empty {
   color: white;
   font-size: 17px;
   text-align: center;

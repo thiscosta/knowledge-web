@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import todos from './modules/theme';
+import theme from './modules/theme';
+import categories from './modules/categories';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { todos },
+  modules: { theme, categories },
 });
