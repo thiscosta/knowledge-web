@@ -2,7 +2,7 @@
   <div>
     <v-layout row wrap>
       <v-flex xs12>
-        <CategoryHeader :title="this.category.name"/>
+        <PageHeader icon="folder_open" subtitle="Categoria" :title="this.category.name"/>
       </v-flex>
     </v-layout>
     <v-layout row wrap>
@@ -24,10 +24,10 @@
 import axios from "axios";
 
 import CardArticle from "@/components/CardArticle";
-import CategoryHeader from "@/components/CategoryHeader";
+import PageHeader from "@/components/PageHeader";
 
 export default {
-  components: { CardArticle, CategoryHeader },
+  components: { CardArticle, PageHeader },
   data() {
     return {
       articles: [],
@@ -54,7 +54,6 @@ export default {
   },
   watch: {
     $route(to) {
-      console.log("mudou a rota");
       this.category._id = to.params.id;
       this.articles = [];
       this.loadData();
@@ -62,7 +61,6 @@ export default {
   },
   async mounted() {
     this.category._id = this.$route.params.id;
-    console.log("id: " + this.category._id);
     this.loadData();
   }
 };

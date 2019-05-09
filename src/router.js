@@ -4,8 +4,9 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 import Home from '@/views/Home';
-import ArticlesByCategory  from '@/views/ArticlesByCategory'
-import Article  from '@/views/Article'
+import Category from '@/views/Category'
+import Article from '@/views/Article'
+import AdminPanel from '@/views/AdminPanel'
 
 export default new Router({
   mode: 'history',
@@ -18,12 +19,17 @@ export default new Router({
     {
       path: '/categories/:id/articles',
       name: 'articlesByCategory',
-      component: ArticlesByCategory,
+      component: Category,
     },
     {
       path: '/categories/:id/articles/:articleId',
       name: 'article',
       component: Article,
+    },
+    {
+      path: '/admin',
+      name: 'adminPanel',
+      component: AdminPanel
     },
   ],
 });

@@ -19,7 +19,7 @@
                 <div class="headline">{{ article.name }}</div>
                 <p>{{ article.description }}</p>
                 <p>{{ formatDate(article.createdAt) }}</p>
-                <p><strong>Autor: </strong>{{ article.author.name }}</p>
+                <p><strong>Autor: </strong>{{ article.author ? article.author.name : '' }}</p>
               </div>
             </v-card-title>
           </v-flex>

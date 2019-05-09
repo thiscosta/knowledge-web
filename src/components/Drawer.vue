@@ -2,7 +2,7 @@
   <div>
     <v-navigation-drawer
       :style="{'background-color': theme.primary}"
-      v-model="drawer"
+      :value="drawer"
       absolute
       dark
       temporary
@@ -22,14 +22,13 @@
 
 <script>
 import Tree from "liquor-tree";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-  props: ["drawer"],
   components: { Tree },
   data: () => ({
     treeOptions: {
-      propertyNames: { text: "name", id: '_id' },
+      propertyNames: { text: "name", id: "_id" },
       filter: {
         emptyText: "Categoria não encontrada :("
       }
@@ -39,6 +38,9 @@ export default {
   computed: {
     theme() {
       return this.$store.getters.getTheme;
+    },
+    drawer() {
+      return this.$store.getters.getDrawer;
     }
   },
   methods: {
@@ -49,12 +51,13 @@ export default {
       });
     },
     async treeData() {
-      const tree = await axios.get('http://localhost:4040/categories/tree').then(res => res.data)
-      return tree
+      return await axios
+        .get("http://localhost:4040/categories/tree")
+        .then(res => res.data);
     }
   },
-  mounted(){
-    this.$refs.tree.$on('node:selected', this.onNodeSelect)
+  mounted() {
+    this.$refs.tree.$on("node:selected", this.onNodeSelect);
   }
 };
 </script>

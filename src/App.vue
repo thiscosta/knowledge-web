@@ -1,14 +1,14 @@
 <template>
   <v-app>
-    <Header v-on:nav-icon-clicked="toggleDrawer"/>
+    <Header v-on:nav-icon-clicked="changeDrawer"/>
     <v-content>
       <v-container>
         <v-layout row wrap>
           <v-flex xs12>
-            <Drawer :drawer="drawer"/>
+            <Drawer/>
           </v-flex>
           <v-flex xs12>
-           <router-view></router-view>
+            <router-view></router-view>
           </v-flex>
         </v-layout>
       </v-container>
@@ -19,6 +19,7 @@
 <script>
 import Header from "./components/Header.vue";
 import Drawer from "./components/Drawer.vue";
+import { mapActions } from 'vuex'
 
 export default {
   data() {
@@ -30,9 +31,11 @@ export default {
     Header,
     Drawer
   },
-  methods:{
-    toggleDrawer(){
-      this.drawer = !this.drawer
+  methods: {
+    ...mapActions(['toggleDrawer']),
+    ...mapActions({toggleDrawer: 'toggleDrawer'}),
+    changeDrawer() {
+      this.toggleDrawer()
     }
   }
 };

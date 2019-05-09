@@ -1,8 +1,8 @@
 <template>
   <div>
-    <ArticleHeader :title="article.name" :createdAt="article.createdAt"/>
+    <PageHeader :title="article.name" subtitle="Artigo" icon="dvr" :createdAt="article.createdAt"/>
     <v-layout row wrap>
-      <v-flex xs12 style="margin-bottom:50px;">{{ article.name }}</v-flex>
+      <v-flex v-html="article.content"></v-flex>
     </v-layout>
   </div>
 </template>
@@ -10,33 +10,32 @@
 <script>
 import axios from "axios";
 
-import ArticleHeader from "@/components/ArticleHeader";
+import PageHeader from "@/components/PageHeader";
 
 export default {
-  components: { ArticleHeader },
+  components: { PageHeader },
   data() {
     return {
       article: {}
     };
   },
   methods: {
-    async loadData() {
+    async getArticle() {
       const article = await axios.get(
         "http://localhost:4040/articles/" + this.article._id
       );
-      console.log("achou o article", article);
       this.article = article.data;
     }
   },
   watch: {
     $route(to) {
       this.article._id = to.params.articleId;
-      this.loadData();
+      this.getArticle();
     }
   },
   async mounted() {
     this.article._id = this.$route.params.articleId;
-    this.loadData();
+    this.getArticle();
   }
 };
 </script>
