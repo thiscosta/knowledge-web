@@ -59,6 +59,7 @@
 
 <script>
 import axios from "axios";
+import baseUrl from "@/api/api";
 
 export default {
   data() {
@@ -82,7 +83,7 @@ export default {
     createCategory() {
       if (this.validateAllFields()) {
         axios
-          .post("http://localhost:4040/categories", this.mountBody(), {
+          .post(`${baseUrl}categories`, this.mountBody(), {
             headers: {
               Authorization:
                 "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1Y2QxODBjYjA1N2MyMTRiY2MzMTM5YWEiLCJlbWFpbCI6InRoaWFnb0BlbWFpbC5jb20iLCJuYW1lIjoiVGhpYWdvIiwiYWRtaW4iOnRydWUsImlhdCI6MTU1NzQxOTYzOSwiZXhwIjoxNTU3Njc4ODM5fQ.61mqS4ro2LpJY7qgdhBstlKSVdTELW4RFBuHZeH2Mwk"
@@ -166,9 +167,7 @@ export default {
     }
   },
   async created() {
-    this.categories = await axios("http://localhost:4040/categories").then(
-      res => res.data
-    );
+    this.categories = await axios(`${baseUrl}categories`).then(res => res.data);
     this.paths = this.categories.map(category => category.path);
   }
 };

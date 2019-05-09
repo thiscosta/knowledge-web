@@ -9,6 +9,7 @@
 
 <script>
 import axios from "axios";
+import baseUrl from "@/api/api";
 
 import PageHeader from "@/components/PageHeader";
 
@@ -21,9 +22,7 @@ export default {
   },
   methods: {
     async getArticle() {
-      const article = await axios.get(
-        "http://localhost:4040/articles/" + this.article._id
-      );
+      const article = await axios.get(`${baseUrl}articles/${this.article._id}`);
       this.article = article.data;
     }
   },

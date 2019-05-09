@@ -11,6 +11,7 @@
 
 <script>
 import axios from "axios";
+import baseUrl from "@/api/api";
 
 import PageHeader from "../components/PageHeader";
 import Statistic from "../components/Statistic";
@@ -21,16 +22,16 @@ export default {
     return {
       stats: {},
       icons: {
-        users: 'people',
-        articles: 'dvr',
-        categories: 'folder_open'
+        users: "people",
+        articles: "dvr",
+        categories: "folder_open"
       }
     };
   },
   methods: {
     async getStats() {
       this.stats = await axios
-        .get("http://localhost:4040/statistics")
+        .get(`${baseUrl}statistics`)
         .then(stats => stats.data);
     }
   },

@@ -23,6 +23,7 @@
 <script>
 import Tree from "liquor-tree";
 import axios from "axios";
+import baseUrl from '@/api/api'
 
 export default {
   components: { Tree },
@@ -52,7 +53,7 @@ export default {
     },
     async treeData() {
       return await axios
-        .get("http://localhost:4040/categories/tree")
+        .get(`${baseUrl}categories/tree`)
         .then(res => res.data);
     }
   },

@@ -85,6 +85,7 @@
 
 <script>
 import axios from "axios";
+import baseUrl from "@/api/api";
 
 export default {
   data() {
@@ -108,7 +109,7 @@ export default {
     createUser() {
       if (this.validateAllFields()) {
         axios
-          .post("http://localhost:4040/signup", {
+          .post(`${baseUrl}signup`, {
             name: this.user.name.value,
             email: this.user.email.value,
             password: this.user.password.value,

@@ -22,6 +22,7 @@
 
 <script>
 import axios from "axios";
+import baseUrl from "@/api/api";
 
 import CardArticle from "@/components/CardArticle";
 import PageHeader from "@/components/PageHeader";
@@ -37,11 +38,11 @@ export default {
   methods: {
     async loadData() {
       const category = await axios
-        .get("http://localhost:4040/categories/" + this.category._id)
+        .get(`${baseUrl}/categories/${this.category._id}`)
         .then(res => res.data);
       this.category = category;
       const articles = await axios.get(
-        `http://localhost:4040/categories/${this.category._id}/articles`
+        `${baseUrl}/categories/${this.category._id}/articles`
       );
       this.articles = articles.data;
     },
