@@ -64,8 +64,6 @@ import baseUrl from "@/api/api";
 export default {
   data() {
     return {
-      categories: [],
-      paths: [],
       category: {
         name: { error: false, errorMessages: [], value: "" },
         parent: { error: false, errorMessages: [], value: "" }
@@ -77,6 +75,12 @@ export default {
   computed: {
     theme() {
       return this.$store.getters.getTheme;
+    },
+    paths(){
+      return this.$store.getters.getPaths
+    },
+    categories(){
+      return this.$store.getters.getCategories
     }
   },
   methods: {
@@ -162,14 +166,9 @@ export default {
           name: this.category.name.value
         };
       }
-      console.log("body: ", body);
       return body;
     }
   },
-  async created() {
-    this.categories = await axios(`${baseUrl}categories`).then(res => res.data);
-    this.paths = this.categories.map(category => category.path);
-  }
 };
 </script>
 

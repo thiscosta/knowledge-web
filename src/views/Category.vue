@@ -38,11 +38,11 @@ export default {
   methods: {
     async loadData() {
       const category = await axios
-        .get(`${baseUrl}/categories/${this.category._id}`)
+        .get(`${baseUrl}categories/${this.category._id}`)
         .then(res => res.data);
       this.category = category;
       const articles = await axios.get(
-        `${baseUrl}/categories/${this.category._id}/articles`
+        `${baseUrl}categories/${this.category._id}/articles`
       );
       this.articles = articles.data;
     },
