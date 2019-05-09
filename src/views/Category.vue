@@ -35,14 +35,23 @@ export default {
       category: {}
     };
   },
+  computed: {
+    token() {
+      return this.$store.getters.getToken;
+    }
+  },
   methods: {
     async loadData() {
       const category = await axios
-        .get(`${baseUrl}/categories/${this.category._id}`)
+        .get(`${baseUrl}categories/${this.category._id}`, {
+          headers: {
+            Authorization: "Bearer " + this.token
+          }
+        })
         .then(res => res.data);
       this.category = category;
       const articles = await axios.get(
-        `${baseUrl}/categories/${this.category._id}/articles`
+        `${baseUrl}categories/${this.category._id}/articles`
       );
       this.articles = articles.data;
     },

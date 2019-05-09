@@ -4,9 +4,10 @@ import Vuex from 'vuex';
 import theme from './modules/theme';
 import categories from './modules/categories';
 import drawer from './modules/drawer';
+import user from './modules/user';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { theme, categories, drawer },
+  modules: { theme, categories, drawer, user },
 });
