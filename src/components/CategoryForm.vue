@@ -81,6 +81,9 @@ export default {
     },
     categories(){
       return this.$store.getters.getCategories
+    },
+    token() {
+      return this.$store.getters.getToken;
     }
   },
   methods: {
@@ -89,8 +92,7 @@ export default {
         axios
           .post(`${baseUrl}categories`, this.mountBody(), {
             headers: {
-              Authorization:
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1Y2QxODBjYjA1N2MyMTRiY2MzMTM5YWEiLCJlbWFpbCI6InRoaWFnb0BlbWFpbC5jb20iLCJuYW1lIjoiVGhpYWdvIiwiYWRtaW4iOnRydWUsImlhdCI6MTU1NzQxOTYzOSwiZXhwIjoxNTU3Njc4ODM5fQ.61mqS4ro2LpJY7qgdhBstlKSVdTELW4RFBuHZeH2Mwk"
+              Authorization: "Bearer " + this.token
             }
           })
           .then(res => {

@@ -75,7 +75,7 @@
       :timeout="5000"
       top
     >
-      Categoria criado com sucesso!
+      Artigo criado com sucesso!
       <v-btn color="white" flat @click="successCreatedArticle = false">Fechar</v-btn>
     </v-snackbar>
     <v-snackbar
@@ -86,7 +86,7 @@
       :timeout="5000"
       top
     >
-      Erro ao criar categoria, por favor tente novamente.
+      Erro ao criar artigo, por favor tente novamente.
       <v-btn color="white" flat @click="failedCreatedArticle = false">Fechar</v-btn>
     </v-snackbar>
   </v-layout>
@@ -114,11 +114,14 @@ export default {
     theme() {
       return this.$store.getters.getTheme;
     },
-    paths(){
-      return this.$store.getters.getPaths
+    paths() {
+      return this.$store.getters.getPaths;
     },
-    categories(){
-      return this.$store.getters.getCategories
+    categories() {
+      return this.$store.getters.getCategories;
+    },
+    token() {
+      return this.$store.getters.getToken;
     }
   },
   methods: {
@@ -127,8 +130,7 @@ export default {
         axios
           .post(`${baseUrl}articles`, this.mountBody(), {
             headers: {
-              Authorization:
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1Y2QxODBjYjA1N2MyMTRiY2MzMTM5YWEiLCJlbWFpbCI6InRoaWFnb0BlbWFpbC5jb20iLCJuYW1lIjoiVGhpYWdvIiwiYWRtaW4iOnRydWUsImlhdCI6MTU1NzQxOTYzOSwiZXhwIjoxNTU3Njc4ODM5fQ.61mqS4ro2LpJY7qgdhBstlKSVdTELW4RFBuHZeH2Mwk"
+              Authorization: "Bearer " + this.token
             }
           })
           .then(res => {
@@ -239,7 +241,7 @@ export default {
 
       return body;
     }
-  },
+  }
 };
 </script>
 
