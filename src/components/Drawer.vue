@@ -14,7 +14,7 @@
           class="search-bar"
           v-model="treeFilter"
         />
-        <Tree :data="treeData()" :options="treeOptions" ref="tree" :filter="treeFilter"/>
+        <Tree :data="treeData" :options="treeOptions" ref="tree" :filter="treeFilter"/>
       </div>
     </v-navigation-drawer>
   </div>
@@ -23,15 +23,26 @@
 <script>
 import Tree from "liquor-tree";
 import axios from "axios";
-import baseUrl from '@/api/api'
+import baseUrl from "@/api/api";
+import store from "@/store/store";
 
 export default {
   components: { Tree },
   data: () => ({
+    treeData: [],
     treeOptions: {
       propertyNames: { text: "name", id: "_id" },
       filter: {
         emptyText: "Categoria não encontrada :("
+      },
+      store: {
+        store,
+        getter: () => {
+          return store.getters.getTree;
+        },
+        dispatcher(tree) {
+          store.dispatch("setTree", tree);
+        }
       }
     },
     treeFilter: ""
@@ -42,7 +53,7 @@ export default {
     },
     drawer() {
       return this.$store.getters.getDrawer;
-    }
+    },
   },
   methods: {
     onNodeSelect(node) {
@@ -50,11 +61,6 @@ export default {
         name: "articlesByCategory",
         params: { id: node.id }
       });
-    },
-    async treeData() {
-      return await axios
-        .get(`${baseUrl}categories/tree`)
-        .then(res => res.data);
     }
   },
   mounted() {

@@ -60,6 +60,7 @@
 <script>
 import axios from "axios";
 import baseUrl from "@/api/api";
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -87,6 +88,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['loadTree']),
+    ...mapActions({ loadTree: 'loadTree'},),
     createCategory() {
       if (this.validateAllFields()) {
         axios
@@ -99,6 +102,7 @@ export default {
             if (res.status == 200 && res.data) {
               this.successCreatedCategory = true;
               this.resetForm();
+              this.loadTree()
             } else {
               this.failedCreatedCategory = true;
             }

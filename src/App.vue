@@ -32,11 +32,14 @@ export default {
     Drawer
   },
   methods: {
-    ...mapActions(['toggleDrawer']),
-    ...mapActions({toggleDrawer: 'toggleDrawer'}),
+    ...mapActions(['toggleDrawer', 'loadTree']),
+    ...mapActions({toggleDrawer: 'toggleDrawer', loadTree: 'loadTree'},),
     changeDrawer() {
       this.toggleDrawer()
-    }
+    },
+  },
+  async created(){
+    await this.loadTree()
   }
 };
 </script>

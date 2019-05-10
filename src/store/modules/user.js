@@ -1,7 +1,7 @@
 export default {
   state: {
     loggedUser:{
-      authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1Y2Q0OWFkNDYyNzAwMTBjODQxYjNhMGEiLCJlbWFpbCI6InRoaXNjb3N0YUBsaXZlLmNvbSIsIm5hbWUiOiJUaGlhZ28gQ29zdGEiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTU3NDM3MjQ5LCJleHAiOjE1NTc2OTY0NDl9.xFyd9JE6eUyzfAmVBqC3UypJKNTVjvaQZF2M5N0aquI'
+      authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1Y2QxODBjYjA1N2MyMTRiY2MzMTM5YWEiLCJlbWFpbCI6InRoaWFnb0BlbWFpbC5jb20iLCJuYW1lIjoiVGhpYWdvIiwiYWRtaW4iOnRydWUsImlhdCI6MTU1NzQ0ODgxMSwiZXhwIjoxNTU3NzA4MDExfQ.FprQYu3prVxkoItnzbEgndVcXo22SPO1xYNjq8vYVVo'
     }
   },
   mutations: {
