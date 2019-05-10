@@ -10,7 +10,7 @@
       <div class="menu">
         <v-text-field
           color="white"
-          label="Digite para filtrar..."
+          label="Procurar uma categoria"
           class="search-bar"
           v-model="treeFilter"
         />
@@ -70,6 +70,9 @@ export default {
 </script>
 
 <style>
+:root {
+  --hover-color:  rgba(255,255,255,0.1);
+}
 .tree-anchor {
   color: #fff;
 }
@@ -77,10 +80,10 @@ export default {
   border-color: #fff;
 }
 .tree-node.selected > .tree-content {
-  background-color: #474ec2 !important;
+  background-color: var(--hover-color) !important;
 }
 .tree-content:hover {
-  background-color: #474ec2 !important;
+  background-color: var(--hover-color) !important;
 }
 .search-bar {
   margin: 15px;

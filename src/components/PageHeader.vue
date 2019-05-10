@@ -7,7 +7,7 @@
     <v-flex xs12 class="mb-5">
       <p class="font-weight-light title">{{ subtitle }}</p>
       <p class="font-weight-light subtitle">{{ createdAt ? formatDate(createdAt) : '' }}</p>
-      <v-divider></v-divider>
+      <v-divider :color="theme.fontColor"></v-divider>
     </v-flex>
   </v-layout>
 </template>

@@ -1,11 +1,12 @@
 <template>
   <div>
-    <v-tabs v-model="active" color="white" dark :slider-color="theme.primary" class="elevation-5">
-      <v-tab class="tab">
+    <v-tabs v-model="active" color="white" dark :slider-color="theme.primary"  class="elevation-5" style="border:1px solid white">
+      <v-tab>
         <span class="font-weight-bold subheading" :style="[{'color':theme.primary}]">Usuários</span>
       </v-tab>
       <v-tab-item>
-        <UserForm/>
+        <UserCreation/>
+        <UserList />
       </v-tab-item>
       <v-tab>
         <span class="font-weight-bold subheading" :style="[{'color':theme.primary}]">Categorias</span>
@@ -24,12 +25,13 @@
 <script>
 import { mapActions } from "vuex";
 
-import UserForm from "@/components/UserForm";
+import UserCreation from "@/components/UserCreation";
+import UserList from "@/components/UserList";
 import CategoryForm from "@/components/CategoryForm";
 import ArticleForm from "@/components/ArticleForm";
 
 export default {
-  components: { UserForm, CategoryForm, ArticleForm },
+  components: { UserCreation, CategoryForm, ArticleForm, UserList },
   data() {
     return {
       titles: [
@@ -47,8 +49,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(["loadCategories"]),
-    ...mapActions({ loadCategories: "loadCategories" }),
+    ...mapActions(["loadCategories", 'loadUsers']),
+    ...mapActions({ loadCategories: "loadCategories", loadUsers: "loadUsers" }),
     next() {
       const active = parseInt(this.active);
       this.active = active < 2 ? active + 1 : 0;
@@ -56,6 +58,7 @@ export default {
   },
   created() {
     this.loadCategories();
+    this.loadUsers();
   }
 };
 </script>

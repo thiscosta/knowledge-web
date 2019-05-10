@@ -2,13 +2,13 @@
   <v-layout row wrap @keydown.enter="createUser">
     <v-flex xs12 style="padding:3vh;">
       <p class="headline font-weight-bold">Criar um novo usuário</p>
-      <v-divider></v-divider>
+      <v-divider :color="theme.fontColor"></v-divider>
     </v-flex>
     <v-flex xs12 class="ml-5 mr-5 mt-4">
       Nome:
       <v-text-field
         class="mt-3"
-        label="Digite seu nome..."
+        label="Digite o nome"
         solo
         prepend-inner-icon="perm_identity"
         v-model="user.name.value"
@@ -21,7 +21,7 @@
       <v-text-field
         class="mt-3"
         type="email"
-        label="Email"
+        label="Digite o email"
         solo
         prepend-inner-icon="email"
         v-model="user.email.value"
@@ -34,7 +34,7 @@
       <v-text-field
         class="mt-3"
         type="password"
-        label="Senha"
+        label="Digite a senha"
         solo
         prepend-inner-icon="vpn_key"
         v-model="user.password.value"
@@ -54,6 +54,14 @@
         :error="user.confirmPassword.error"
         :error-messages="user.confirmPassword.errorMessages"
       />
+    </v-flex>
+    <v-flex xs12 class="ml-5 mr-5 mt-4">
+      <v-checkbox
+        :color="theme.primary"
+        v-model="user.admin"
+        label="Administrador"
+        :dark="theme.name == 'dark'"
+      ></v-checkbox>
     </v-flex>
     <v-flex xs12 text-xs-center class="mt-5 mb-5">
       <v-btn :color="theme.primary" dark large @click="createUser">Enviar</v-btn>
@@ -94,7 +102,8 @@ export default {
         name: { error: false, errorMessages: [], value: "" },
         email: { error: false, errorMessages: [], value: "" },
         password: { error: false, errorMessages: [], value: "" },
-        confirmPassword: { error: false, errorMessages: [], value: "" }
+        confirmPassword: { error: false, errorMessages: [], value: "" },
+        admin: false
       },
       successCreatedUser: false,
       failedCreatedUser: false
@@ -103,29 +112,52 @@ export default {
   computed: {
     theme() {
       return this.$store.getters.getTheme;
+    },
+    token() {
+      return this.$store.getters.getToken;
     }
   },
   methods: {
     createUser() {
       if (this.validateAllFields()) {
+        let endpoint = this.user.admin ? "users" : "signup";
+        console.log("endpoint", endpoint);
         axios
-          .post(`${baseUrl}signup`, {
-            name: this.user.name.value,
-            email: this.user.email.value,
-            password: this.user.password.value,
-            confirmPassword: this.user.confirmPassword.value
-          })
-          .then(res => {
-            if (res.status == 200 && res.data) {
-              this.successCreatedUser = true;
-              this.resetForm();
-            } else {
-              this.failedCreatedUser = true;
-            }
-          })
+          .post(
+            `${baseUrl + endpoint}`,
+            {
+              name: this.user.name.value,
+              email: this.user.email.value,
+              password: this.user.password.value,
+              confirmPassword: this.user.confirmPassword.value,
+              admin: this.user.admin
+            },
+            this.createHeader()
+          )
+          .then(res => this.handleUserCreation(res))
           .catch(err => {
             this.failedCreatedUser = true;
           });
+      }
+    },
+    createHeader() {
+      if (this.user.admin) {
+        return {
+          headers: {
+            Authorization: "Bearer " + this.token
+          }
+        };
+      }
+      return {
+
+      }
+    },
+    handleUserCreation(res) {
+      if (res.status == 200 && res.data) {
+        this.successCreatedUser = true;
+        this.resetForm();
+      } else {
+        this.failedCreatedUser = true;
       }
     },
     validateAllFields() {
@@ -203,7 +235,8 @@ export default {
         name: { error: false, errorMessages: [], value: "" },
         email: { error: false, errorMessages: [], value: "" },
         password: { error: false, errorMessages: [], value: "" },
-        confirmPassword: { error: false, errorMessages: [], value: "" }
+        confirmPassword: { error: false, errorMessages: [], value: "" },
+        admin: false
       };
     }
   }

@@ -2,7 +2,7 @@
   <v-layout row wrap @keydown.enter="createArticle">
     <v-flex xs12 style="padding:3vh;">
       <p class="headline font-weight-bold">Criar um novo artigo</p>
-      <v-divider></v-divider>
+      <v-divider :color="theme.fontColor"></v-divider>
     </v-flex>
     <v-flex xs12 class="ml-5 mr-5 mt-4">
       Nome:
@@ -32,7 +32,7 @@
       Imagem:
       <v-text-field
         class="mt-3"
-        label="Digite a url da imagem..."
+        label="Digite a url da imagem"
         solo
         prepend-inner-icon="image"
         v-model="article.imageUrl.value"
@@ -45,7 +45,7 @@
       <v-select
         :items="paths"
         class="mt-3"
-        label="Seleciona uma categoria..."
+        label="Selecione uma categoria"
         solo
         prepend-inner-icon="folder_open"
         v-model="article.category.value"

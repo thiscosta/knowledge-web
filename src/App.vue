@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="[{'background-color': theme.backgroundColor }, {'color':theme.fontColor}]">
     <Header v-on:nav-icon-clicked="changeDrawer"/>
     <v-content>
       <v-container>
@@ -19,7 +19,7 @@
 <script>
 import Header from "./components/Header.vue";
 import Drawer from "./components/Drawer.vue";
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -32,14 +32,24 @@ export default {
     Drawer
   },
   methods: {
-    ...mapActions(['toggleDrawer', 'loadTree']),
-    ...mapActions({toggleDrawer: 'toggleDrawer', loadTree: 'loadTree'},),
+    ...mapActions(["toggleDrawer", "loadTree", "loadTheme"]),
+    ...mapActions({
+      toggleDrawer: "toggleDrawer",
+      loadTree: "loadTree",
+      loadTheme: "loadTheme"
+    }),
     changeDrawer() {
-      this.toggleDrawer()
-    },
+      this.toggleDrawer();
+    }
   },
-  async created(){
-    await this.loadTree()
+  async created() {
+    await this.loadTheme();
+    await this.loadTree();
+  },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    }
   }
 };
 </script>

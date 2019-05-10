@@ -2,7 +2,7 @@
   <v-layout row wrap @keydown.enter="createCategory">
     <v-flex xs12 style="padding:3vh;">
       <p class="headline font-weight-bold">Criar uma nova categoria</p>
-      <v-divider></v-divider>
+      <v-divider :color="theme.fontColor"></v-divider>
     </v-flex>
     <v-flex xs12 class="ml-5 mr-5 mt-4">
       Nome:
@@ -21,7 +21,7 @@
       <v-select
         :items="paths"
         class="mt-3"
-        label="Selecione o caminho da categoria..."
+        label="Selecione o caminho da categoria"
         solo
         prepend-inner-icon="folder_open"
         v-model="category.parent.value"

@@ -23,10 +23,26 @@
               <v-icon class="mr-2">settings</v-icon>Painel administrativo
             </v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click="logout()">
+          <v-list-tile @click="exit()">
             <v-list-tile-title>
               <v-icon class="mr-2">exit_to_app</v-icon>Logout
             </v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn flat :color="theme.primary" class="white--text" v-on="on">
+            Tema
+            <v-icon class="ml-2">palette</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-tile @click="changeTheme('dark')">
+            <v-list-tile-title>Escuro</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="changeTheme('light')">
+            <v-list-tile-title>Claro</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -35,11 +51,12 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: ["onMenuClick"],
   data() {
     return {
-      isHoverBrand: false,
+      isHoverBrand: false
     };
   },
   computed: {
@@ -48,18 +65,19 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["logout", "changeTheme"]),
+    ...mapActions({ logout: "logout", changeTheme: "changeTheme" }),
     goHome() {
       this.$router.push("/");
     },
-    adminPanel(){
+    adminPanel() {
       this.$router.push({
-        name: 'adminPanel'
+        name: "adminPanel"
       });
     },
-    async logout(){
-      let user = await localStorage.getItem('user')
-
-    }
+    exit() {
+      this.logout();
+    },
   }
 };
 </script>
