@@ -1,18 +1,26 @@
 <template>
   <div>
-    <v-tabs v-model="active" color="white" dark :slider-color="theme.primary"  class="elevation-5" style="border:1px solid white">
+    <v-tabs
+      v-model="active"
+      color="white"
+      dark
+      :slider-color="theme.primary"
+      class="elevation-5"
+      style="border:1px solid white"
+    >
       <v-tab>
         <span class="font-weight-bold subheading" :style="[{'color':theme.primary}]">Usuários</span>
       </v-tab>
       <v-tab-item>
         <UserCreation/>
-        <UserList />
+        <UserList/>
       </v-tab-item>
       <v-tab>
         <span class="font-weight-bold subheading" :style="[{'color':theme.primary}]">Categorias</span>
       </v-tab>
       <v-tab-item>
         <CategoryForm/>
+        <CategoryList/>
       </v-tab-item>
       <v-tab class="font-weight-bold subheading" :style="[{'color':theme.primary}]">Artigos</v-tab>
       <v-tab-item>
@@ -27,11 +35,18 @@ import { mapActions } from "vuex";
 
 import UserCreation from "@/components/UserCreation";
 import UserList from "@/components/UserList";
+import CategoryList from "@/components/CategoryList";
 import CategoryForm from "@/components/CategoryForm";
 import ArticleForm from "@/components/ArticleForm";
 
 export default {
-  components: { UserCreation, CategoryForm, ArticleForm, UserList },
+  components: {
+    UserCreation,
+    CategoryForm,
+    ArticleForm,
+    UserList,
+    CategoryList
+  },
   data() {
     return {
       titles: [
@@ -49,7 +64,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["loadCategories", 'loadUsers']),
+    ...mapActions(["loadCategories", "loadUsers"]),
     ...mapActions({ loadCategories: "loadCategories", loadUsers: "loadUsers" }),
     next() {
       const active = parseInt(this.active);

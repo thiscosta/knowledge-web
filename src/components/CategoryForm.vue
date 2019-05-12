@@ -40,7 +40,7 @@
       :timeout="5000"
       top
     >
-      Categoria criado com sucesso!
+      Categoria criada com sucesso!
       <v-btn color="white" flat @click="successCreatedCategory = false">Fechar</v-btn>
     </v-snackbar>
     <v-snackbar
