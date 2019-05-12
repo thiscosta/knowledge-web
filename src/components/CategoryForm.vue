@@ -88,8 +88,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['loadTree']),
-    ...mapActions({ loadTree: 'loadTree'},),
+    ...mapActions(['loadTree', 'loadCategories']),
+    ...mapActions({ loadTree: 'loadTree', loadCategories: 'loadCategories'},),
     createCategory() {
       if (this.validateAllFields()) {
         axios
@@ -102,7 +102,8 @@ export default {
             if (res.status == 200 && res.data) {
               this.successCreatedCategory = true;
               this.resetForm();
-              this.loadTree()
+              this.loadTree();
+              this.loadCategories();
             } else {
               this.failedCreatedCategory = true;
             }
