@@ -25,6 +25,7 @@
       <v-tab class="font-weight-bold subheading" :style="[{'color':theme.primary}]">Artigos</v-tab>
       <v-tab-item>
         <ArticleForm/>
+        <ArticleList/>
       </v-tab-item>
     </v-tabs>
   </div>
@@ -33,11 +34,12 @@
 <script>
 import { mapActions } from "vuex";
 
-import UserCreation from "@/components/UserCreation";
 import UserList from "@/components/UserList";
+import UserCreation from "@/components/UserCreation";
 import CategoryList from "@/components/CategoryList";
 import CategoryForm from "@/components/CategoryForm";
 import ArticleForm from "@/components/ArticleForm";
+import ArticleList from "@/components/ArticleList";
 
 export default {
   components: {
@@ -45,7 +47,8 @@ export default {
     CategoryForm,
     ArticleForm,
     UserList,
-    CategoryList
+    CategoryList,
+    ArticleList
   },
   data() {
     return {
@@ -64,8 +67,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(["loadCategories", "loadUsers"]),
-    ...mapActions({ loadCategories: "loadCategories", loadUsers: "loadUsers" }),
+    ...mapActions(["loadCategories", "loadUsers", "loadArticles"]),
+    ...mapActions({
+      loadCategories: "loadCategories",
+      loadUsers: "loadUsers",
+      loadArticles: "loadArticles"
+    }),
     next() {
       const active = parseInt(this.active);
       this.active = active < 2 ? active + 1 : 0;
@@ -74,6 +81,7 @@ export default {
   created() {
     this.loadCategories();
     this.loadUsers();
+    this.loadArticles();
   }
 };
 </script>
