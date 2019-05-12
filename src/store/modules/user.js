@@ -4,7 +4,7 @@ import baseUrl from '@/api/api'
 export default {
   state: {
     loggedUser: {
-      authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1Y2QxODBjYjA1N2MyMTRiY2MzMTM5YWEiLCJlbWFpbCI6InRoaWFnb0BlbWFpbC5jb20iLCJuYW1lIjoiVGhpYWdvIiwiYWRtaW4iOnRydWUsImlhdCI6MTU1NzQ0ODgxMSwiZXhwIjoxNTU3NzA4MDExfQ.FprQYu3prVxkoItnzbEgndVcXo22SPO1xYNjq8vYVVo'
+      authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1Y2Q0OWFkNDYyNzAwMTBjODQxYjNhMGEiLCJlbWFpbCI6InRoaXNjb3N0YUBsaXZlLmNvbSIsIm5hbWUiOiJUaGlhZ28gQ29zdGEiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTU3NjgwNTI2LCJleHAiOjE1NTc5Mzk3MjZ9.cAidUrAs013FxTrOTBaB-64D4IdJu24fgXg65bTTJ1o'
     },
     users: []
   },

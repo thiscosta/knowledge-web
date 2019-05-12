@@ -94,6 +94,7 @@
 <script>
 import axios from "axios";
 import baseUrl from "@/api/api";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -118,6 +119,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["loadUsers"]),
+    ...mapActions({ loadUsers: "loadUsers" }),
     createUser() {
       if (this.validateAllFields()) {
         let endpoint = this.user.admin ? "users" : "signup";
@@ -148,14 +151,13 @@ export default {
           }
         };
       }
-      return {
-
-      }
+      return {};
     },
     handleUserCreation(res) {
       if (res.status == 200 && res.data) {
         this.successCreatedUser = true;
         this.resetForm();
+        this.loadUsers();
       } else {
         this.failedCreatedUser = true;
       }
