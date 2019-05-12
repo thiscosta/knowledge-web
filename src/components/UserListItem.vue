@@ -19,7 +19,9 @@
                 <v-icon :color="'red'" v-on="on" @click.prevent>delete</v-icon>
               </v-list-tile-action>
             </template>
-            <v-card :style="[{ 'background-color':theme.backgroundColor }]">
+            <v-card
+              :style="[{ 'background-color':theme.backgroundColor}, {'color':theme.fontColor}]"
+            >
               <v-card-title class="headline">Excluir usuário</v-card-title>
               <v-card-text>Tem certeza que deseja excluir o usuário {{ user.name }}?</v-card-text>
               <v-card-actions>
