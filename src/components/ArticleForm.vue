@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap @keydown.enter="createArticle">
+  <v-layout row wrap>
     <v-flex xs12 style="padding:3vh;">
       <p class="headline font-weight-bold">Criar um novo artigo</p>
       <v-divider :color="theme.fontColor"></v-divider>
@@ -55,7 +55,7 @@
     </v-flex>
     <v-flex xs12 class="ml-5 mr-5 mt-4">
       Conteúdo:
-      <VueEditor @keydown.enter.prevent v-model="article.content.value"/>
+      <VueEditor v-model="article.content.value"/>
       <!-- <v-text-field
         class="mt-3"
         solo
@@ -137,7 +137,7 @@ export default {
           .post(`${baseUrl}articles`, this.mountBody(), {
             headers: {
               Authorization: "Bearer " + this.token,
-              'Access-Control-Allow-Origin': '*'
+              "Access-Control-Allow-Origin": "*"
             }
           })
           .then(res => {

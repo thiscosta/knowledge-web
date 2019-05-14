@@ -4,21 +4,34 @@ import baseUrl from '@/api/api'
 export default {
   state: {
     loggedUser: {
-      authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1Y2QxODBjYjA1N2MyMTRiY2MzMTM5YWEiLCJlbWFpbCI6InRoaWFnb0BlbWFpbC5jb20iLCJuYW1lIjoiVGhpYWdvIiwiYWRtaW4iOnRydWUsImlhdCI6MTU1Nzg0MTk3MiwiZXhwIjoxNTU4MTAxMTcyfQ.w7uXRcWwTHGvKR0jIOgOq_DZj6igzHd6zLpp9GjJ_Vc'
+      token: '',
+      _id: '',
+      email: '',
+      name: '',
+      admin: false,
+      iat: '',
+      exp: '',
     },
     users: []
   },
   mutations: {
     setLoggedUser(state, user) {
       state.loggedUser = user
+      localStorage.setItem('loggedUser', JSON.stringify(state.loggedUser))
     },
     setUsers(state, users) {
       state.users = users
     }
   },
   actions: {
+    loadUser({ commit }) {
+      const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+      if (loggedUser.token) {
+        commit('setLoggedUser', loggedUser)
+      }
+    },
     login({ commit }, user) {
-      commit('setUser', user)
+      commit('setLoggedUser', user)
     },
     logout({ commit }) {
       commit('setLoggedUser', {
@@ -40,7 +53,7 @@ export default {
   },
   getters: {
     getToken(state) {
-      return state.loggedUser.authToken
+      return state.loggedUser.token
     },
     getUsers(state) {
       return state.users

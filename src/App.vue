@@ -1,18 +1,23 @@
 <template>
   <v-app :style="[{'background-color': theme.backgroundColor }, {'color':theme.fontColor}]">
-    <Header v-on:nav-icon-clicked="changeDrawer"/>
-    <v-content>
-      <v-container>
-        <v-layout row wrap>
-          <v-flex xs12>
-            <Drawer/>
-          </v-flex>
-          <v-flex xs12>
-            <router-view></router-view>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
+    <div v-if="$router.currentRoute.name != 'login'">
+      <Header v-on:nav-icon-clicked="changeDrawer"/>
+      <v-content>
+        <v-container>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <Drawer/>
+            </v-flex>
+            <v-flex xs12>
+              <router-view></router-view>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </div>
+    <div v-if="$router.currentRoute.name == 'login'">
+      <router-view></router-view>
+    </div>
   </v-app>
 </template>
 
@@ -32,11 +37,12 @@ export default {
     Drawer
   },
   methods: {
-    ...mapActions(["toggleDrawer", "loadTree", "loadTheme"]),
+    ...mapActions(["toggleDrawer", "loadTree", "loadTheme", "loadUser"]),
     ...mapActions({
       toggleDrawer: "toggleDrawer",
       loadTree: "loadTree",
-      loadTheme: "loadTheme"
+      loadTheme: "loadTheme",
+      loadUser: "loadUser"
     }),
     changeDrawer() {
       this.toggleDrawer();
@@ -50,6 +56,9 @@ export default {
     theme() {
       return this.$store.getters.getTheme;
     }
+  },
+  created() {
+    this.loadUser();
   }
 };
 </script>

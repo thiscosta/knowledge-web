@@ -96,7 +96,7 @@
               </v-flex>
               <v-flex xs12>
                 Conteúdo:
-                <VueEditor @keydown.enter.prevent v-model="articleEdition.content"/>
+                <VueEditor v-model="articleEdition.content"/>
               </v-flex>
             </v-layout>
           </v-container>
