@@ -9,11 +9,7 @@
     <v-layout class="mt-1" row wrap>
       <v-flex xs12 style="padding: 0 3vh">
         <v-list style="background-color: transparent" two-line>
-          <p
-            :class="[{'white--text':theme.name == 'dark'}]"
-            v-for="article in articles"
-            :key="article._id"
-          >{{ article.name }}</p>
+          <ArticleListItem v-for="article in articles" :key="article._id" :article="article"/>
         </v-list>
       </v-flex>
     </v-layout>
@@ -21,7 +17,10 @@
 </template>
 
 <script>
+import ArticleListItem from "./ArticleListItem";
+
 export default {
+  components: { ArticleListItem },
   computed: {
     theme() {
       return this.$store.getters.getTheme;

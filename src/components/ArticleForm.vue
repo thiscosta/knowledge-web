@@ -95,6 +95,7 @@
 <script>
 import axios from "axios";
 import baseUrl from "@/api/api";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -125,6 +126,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["loadArticles"]),
+    ...mapActions({ loadArticles: "loadArticles" }),
     createArticle() {
       if (this.validateAllFields()) {
         axios
@@ -137,6 +140,7 @@ export default {
             if (res.status == 200 && res.data) {
               this.successCreatedArticle = true;
               this.resetForm();
+              this.loadArticles();
             } else {
               this.failedCreatedArticle = true;
             }

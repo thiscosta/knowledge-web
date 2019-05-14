@@ -23,7 +23,7 @@
               :style="[{ 'background-color':theme.backgroundColor}, {'color':theme.fontColor}]"
             >
               <v-card-title class="headline">Excluir categoria</v-card-title>
-              <v-card-text>Tem certeza que deseja excluir o categoria {{ category.name }}?</v-card-text>
+              <v-card-text>Tem certeza que deseja excluir a categoria {{ category.name }}?</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn :color="theme.primary" flat @click="deletion = false">Cancelar</v-btn>
@@ -79,7 +79,7 @@
       :timeout="5000"
       top
     >
-      Usuário editado com sucesso!
+      Categoria editada com sucesso!
       <v-btn color="white" flat @click="successEditedCategory = false">Fechar</v-btn>
     </v-snackbar>
     <v-snackbar
@@ -181,12 +181,12 @@ export default {
     },
     async handleCategoryEdition(res) {
       if (res.status == 200 && res.data) {
-        this.categoryEdition = res.data;
-        await this.loadCategories();
         this.successEditedCategory = true;
         this.edition = false;
+        this.categoryEdition = res.data;
+        await this.loadCategories();
         this.loadTree();
-        await this.fillParentPath();
+        this.fillParentPath();
       } else {
         this.failedEditedCategory = true;
       }
