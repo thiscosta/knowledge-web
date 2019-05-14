@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-dialog v-model="edition" persistent max-width="600px">
+    <v-dialog
+      v-model="edition"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      max-width="600px"
+    >
       <template v-slot:activator="{ on }">
         <v-list-tile>
           <v-list-tile-content>
@@ -90,14 +96,7 @@
               </v-flex>
               <v-flex xs12>
                 Conteúdo:
-                <v-text-field
-                  class="mt-3"
-                  prepend-inner-icon="text_format"
-                  v-model="articleEdition.content"
-                  :error="contentError.length > 0"
-                  :error-messages="contentError"
-                  :dark="theme.name == 'dark'"
-                />
+                <VueEditor @keydown.enter.prevent v-model="articleEdition.content"/>
               </v-flex>
             </v-layout>
           </v-container>
@@ -161,8 +160,10 @@ import axios from "axios";
 import baseUrl from "@/api/api";
 import { mapActions } from "vuex";
 import moment from "moment";
+import { VueEditor } from "vue2-editor";
 
 export default {
+  components: { VueEditor },
   props: ["article"],
   data() {
     return {

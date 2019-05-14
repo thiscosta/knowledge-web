@@ -55,14 +55,15 @@
     </v-flex>
     <v-flex xs12 class="ml-5 mr-5 mt-4">
       Conteúdo:
-      <v-text-field
+      <VueEditor @keydown.enter.prevent v-model="article.content.value"/>
+      <!-- <v-text-field
         class="mt-3"
         solo
         prepend-inner-icon="text_format"
         v-model="article.content.value"
         :error="article.content.error"
         :error-messages="article.content.errorMessages"
-      />
+      />-->
     </v-flex>
     <v-flex xs12 text-xs-center class="mt-5 mb-5">
       <v-btn :color="theme.primary" dark large @click="createArticle">Enviar</v-btn>
@@ -96,8 +97,10 @@
 import axios from "axios";
 import baseUrl from "@/api/api";
 import { mapActions } from "vuex";
+import { VueEditor } from "vue2-editor";
 
 export default {
+  components: { VueEditor },
   data() {
     return {
       article: {
@@ -133,7 +136,8 @@ export default {
         axios
           .post(`${baseUrl}articles`, this.mountBody(), {
             headers: {
-              Authorization: "Bearer " + this.token
+              Authorization: "Bearer " + this.token,
+              'Access-Control-Allow-Origin': '*'
             }
           })
           .then(res => {
