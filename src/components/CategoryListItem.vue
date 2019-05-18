@@ -227,7 +227,6 @@ export default {
         .then(result => this.handleCategoryDeletion(result));
     },
     handleCategoryDeletion(response) {
-      console.log(`status code `, response);
       if (response.status == 204) {
         this.successDeletedCategory = true;
         this.loadCategories();

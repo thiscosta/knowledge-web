@@ -10,15 +10,15 @@
     >Knowledge</v-toolbar-title>
     <v-spacer/>
     <v-toolbar-items>
-      <v-menu offset-y>
+      <v-menu offset-y v-if="user.token.length > 0">
         <template v-slot:activator="{ on }">
           <v-btn flat :color="theme.primary" class="white--text" v-on="on">
-            Thiago Costa
+            {{ user.name.split(" ")[0] }}
             <v-icon>arrow_drop_down</v-icon>
           </v-btn>
         </template>
         <v-list>
-          <v-list-tile @click="adminPanel()">
+          <v-list-tile v-if="user.admin" @click.stop="adminPanel()">
             <v-list-tile-title>
               <v-icon class="mr-2">settings</v-icon>Painel administrativo
             </v-list-tile-title>
@@ -30,6 +30,7 @@
           </v-list-tile>
         </v-list>
       </v-menu>
+      <v-btn v-else flat @click="login()" :color="theme.primary" class="white--text">Login</v-btn>
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <v-btn flat :color="theme.primary" class="white--text" v-on="on">
@@ -62,22 +63,31 @@ export default {
   computed: {
     theme() {
       return this.$store.getters.getTheme;
+    },
+    user() {
+      return this.$store.getters.getLoggedUser;
     }
   },
   methods: {
     ...mapActions(["logout", "changeTheme"]),
     ...mapActions({ logout: "logout", changeTheme: "changeTheme" }),
     goHome() {
-      this.$router.push("/");
+      this.$router.push({ name: "home" });
+    },
+    login() {
+      this.$router.push({
+        name: "login"
+      });
     },
     adminPanel() {
       this.$router.push({
         name: "adminPanel"
       });
     },
-    exit() {
-      this.logout();
-    },
+    async exit() {
+      await this.logout();
+      this.$router.push({ name: "login" });
+    }
   }
 };
 </script>

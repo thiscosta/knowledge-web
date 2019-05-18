@@ -41,9 +41,16 @@
         </v-list-tile>
       </template>
       <v-card :style="[{'background-color' : theme.backgroundColor}, {'color':theme.fontColor}]">
-        <v-card-title>
-          <span class="headline">Editar: {{ article.name }}</span>
-        </v-card-title>
+        <v-toolbar dark :color="theme.primary">
+          <v-btn icon dark @click="edition = false">
+            <v-icon class="white--text" >close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Editar: {{ article.name }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn class="white--text"  flat @click="editArticle">Salvar</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
@@ -198,7 +205,6 @@ export default {
     ...mapActions(["loadArticles"]),
     ...mapActions({ loadArticles: "loadArticles" }),
     editArticle() {
-      console.log("oi editArticle");
       if (this.validateAllFields()) {
         this.fillParentId();
         axios
@@ -266,10 +272,6 @@ export default {
       });
     },
     hasErrors() {
-      console.log("name errors: ", this.nameError);
-      console.log("description errors: ", this.descriptionError);
-      console.log("category errors: ", this.categoryError);
-      console.log("content errors: ", this.contentError);
       if (
         !this.articleEdition.name.error &&
         !this.articleEdition.description.error &&

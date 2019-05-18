@@ -25,6 +25,7 @@ import Tree from "liquor-tree";
 import axios from "axios";
 import baseUrl from "@/api/api";
 import store from "@/store/store";
+import { mapActions } from "vuex";
 
 export default {
   components: { Tree },
@@ -53,7 +54,7 @@ export default {
     },
     drawer() {
       return this.$store.getters.getDrawer;
-    },
+    }
   },
   methods: {
     onNodeSelect(node) {
@@ -71,7 +72,7 @@ export default {
 
 <style>
 :root {
-  --hover-color:  rgba(255,255,255,0.1);
+  --hover-color: rgba(255, 255, 255, 0.1);
 }
 .tree-anchor {
   color: #fff;

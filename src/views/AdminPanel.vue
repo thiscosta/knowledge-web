@@ -67,21 +67,15 @@ export default {
   },
 
   methods: {
-    ...mapActions(["loadCategories", "loadUsers", "loadArticles"]),
-    ...mapActions({
-      loadCategories: "loadCategories",
-      loadUsers: "loadUsers",
-      loadArticles: "loadArticles"
-    }),
+    ...mapActions(["loadUsers"]),
+    ...mapActions({ loadUsers: "loadUsers" }),
     next() {
       const active = parseInt(this.active);
       this.active = active < 2 ? active + 1 : 0;
     }
   },
   created() {
-    this.loadCategories();
     this.loadUsers();
-    this.loadArticles();
   }
 };
 </script>

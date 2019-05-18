@@ -124,7 +124,6 @@ export default {
     createUser() {
       if (this.validateAllFields()) {
         let endpoint = this.user.admin ? "users" : "signup";
-        console.log("endpoint", endpoint);
         axios
           .post(
             `${baseUrl + endpoint}`,

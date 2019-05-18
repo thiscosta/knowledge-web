@@ -26,7 +26,7 @@ export default {
   actions: {
     loadUser({ commit }) {
       const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-      if (loggedUser.token) {
+      if (loggedUser && loggedUser.token) {
         commit('setLoggedUser', loggedUser)
       }
     },
@@ -35,13 +35,20 @@ export default {
     },
     logout({ commit }) {
       commit('setLoggedUser', {
-        authToken: ''
+        token: '',
+        _id: '',
+        email: '',
+        name: '',
+        admin: false,
+        iat: '',
+        exp: '',
       })
+      localStorage.removeItem('loggedUser')
     },
     loadUsers({ state, commit }) {
       axios(`${baseUrl}users`, {
         headers: {
-          Authorization: 'Bearer ' + state.loggedUser.authToken
+          Authorization: 'Bearer ' + state.loggedUser.token
         }
       }).then(users => {
         users.data.map(user => {
@@ -57,6 +64,9 @@ export default {
     },
     getUsers(state) {
       return state.users
+    },
+    getLoggedUser(state){
+      return state.loggedUser
     }
   }
 }

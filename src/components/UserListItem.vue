@@ -248,7 +248,6 @@ export default {
         .then(result => this.handleUserDeletion(result));
     },
     handleUserDeletion(response) {
-      console.log("reponse do delet: ", response);
       if (response.status == 200 && !response.data) {
         this.successDeletedUser = true;
         this.loadUsers();

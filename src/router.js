@@ -33,57 +33,87 @@ const router = new Router({
       name: 'adminPanel',
       component: AdminPanel,
       meta: {
-        requiresAuth: true,
-        is_admin: true
+        requiresAdmin: true,
       }
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: {
+        guest: true
+      }
+    },
+    {
+      path: '*',
+      name: '404',
+      component: Home,
+      meta: {
+        notFound: true
+      }
     }
   ],
 });
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-
-    console.log('usuario logado: ', loggedUser)
-
-    if (!loggedUser || !loggedUser.token) {
-      next({ path: '/login', })
-      console.log('entrou do !loggedUser.token')
-    }
-
-
-
-    if (moment() >= moment(loggedUser.exp * 1000)) {
-      next({ path: '/login', })
-      console.log('entrou do exp')
-      console.log(moment().format('DD/MM/YYYY HH:mm:ss') + ' / ' + moment(loggedUser.exp * 1000).format('DD/MM/YYYY HH:mm:ss'))
-    }
-
-    if (!loggedUser.admin) {
-      next({ path: 'home' })
-      console.log('entrou do admin')
-    }
-
-
-
-    next()
-
-
+    checkAuthenticated(next)
   } else if (to.matched.some(record => record.meta.guest)) {
-    if (localStorage.getItem('loggedUser').token) {
-      next()
-    }
-    else {
-      next({ name: 'login' })
-    }
+    checkGuest(next)
+  } else if (to.matched.some(record => record.meta.requiresAdmin)) {
+    checkAdmin(next)
+  } else if (to.matched.some(record => record.meta.notFound)) {
+    next({ name: 'home' })
   } else {
     next()
   }
 })
+
+const checkAuthenticated = (next) => {
+  const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+
+  if (!loggedUser || !loggedUser.token) {
+    next({ name: 'login', })
+    return
+  }
+
+  if (moment() >= moment(loggedUser.exp * 1000)) {
+    next({ name: 'login', })
+    return
+  }
+
+  next()
+}
+
+const checkAdmin = (next) => {
+  const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+
+  if (!loggedUser || !loggedUser.token) {
+    next({ name: 'login', })
+    return
+  }
+
+  if (moment() >= moment(loggedUser.exp * 1000)) {
+    next({ name: 'login', })
+    return
+  }
+
+  if (!loggedUser.admin) {
+    next({ name: 'home' })
+    return
+  }
+  next()
+}
+
+const checkGuest = (next) => {
+  const loggedUser = JSON.parse(localStorage.getItem('loggedUser'))
+  console.log(!loggedUser)
+  if (!loggedUser || !loggedUser.token) {
+    next()
+  }
+  else {
+    next({ name: 'home' })
+  }
+}
 
 export default router;

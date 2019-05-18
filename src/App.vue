@@ -4,10 +4,8 @@
       <Header v-on:nav-icon-clicked="changeDrawer"/>
       <v-content>
         <v-container>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <Drawer/>
-            </v-flex>
+          <v-layout style="min-height:100vh;">
+            <Drawer/>
             <v-flex xs12>
               <router-view></router-view>
             </v-flex>
@@ -15,7 +13,7 @@
         </v-container>
       </v-content>
     </div>
-    <div v-if="$router.currentRoute.name == 'login'">
+    <div v-else>
       <router-view></router-view>
     </div>
   </v-app>
@@ -48,17 +46,15 @@ export default {
       this.toggleDrawer();
     }
   },
-  async created() {
-    await this.loadTheme();
-    await this.loadTree();
+  created() {
+    this.loadTree();
+    this.loadUser();
+    this.loadTheme();
   },
   computed: {
     theme() {
       return this.$store.getters.getTheme;
     }
-  },
-  created() {
-    this.loadUser();
   }
 };
 </script>

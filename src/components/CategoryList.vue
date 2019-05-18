@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 import CategoryListItem from "./CategoryListItem";
 
 export default {
@@ -35,6 +37,13 @@ export default {
     categories() {
       return this.$store.getters.getCategories;
     }
+  },
+  methods: {
+    ...mapActions(["loadCategories"]),
+    ...mapActions({ loadCategories: "loadCategories" })
+  },
+  created() {
+    this.loadCategories();
   }
 };
 </script>

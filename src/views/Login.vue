@@ -10,8 +10,8 @@
       <v-layout
         row
         wrap
-        class="elevation-15"
-        style="background-color: white; height:60vh"
+        class="elevation-15 pt-3 pb-3"
+        style="background-color: white;"
         align-content-start
       >
         <v-flex xs12 text-xs-center class="mt-5 mb-2">

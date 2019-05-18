@@ -18,6 +18,7 @@
 
 <script>
 import ArticleListItem from "./ArticleListItem";
+import { mapActions } from "vuex";
 
 export default {
   components: { ArticleListItem },
@@ -31,6 +32,13 @@ export default {
     articles() {
       return this.$store.getters.getArticles;
     }
+  },
+  methods: {
+    ...mapActions(["loadArticles"]),
+    ...mapActions({ loadArticles: "loadArticles" })
+  },
+  created() {
+    this.loadArticles();
   }
 };
 </script>

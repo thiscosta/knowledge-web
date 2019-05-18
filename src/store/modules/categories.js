@@ -41,7 +41,7 @@ export default {
     getPaths(state) {
       return state.paths
     },
-    getTree(state){
+    getTree(state) {
       return state.tree
     }
   },
