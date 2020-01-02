@@ -1,2 +1,2 @@
-const baseUrl = 'http://localhost:4040/';
+const baseUrl = 'https://tc-knowledge-api.herokuapp.com/';
 export default baseUrl;
