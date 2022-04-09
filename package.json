@@ -14,7 +14,7 @@
     "core-js": "^2.6.5",
     "liquor-tree": "^0.2.56",
     "material-design-icons-iconfont": "^3.0.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "roboto-fontface": "*",
     "vue": "^2.6.10",
     "vue-lodash": "^2.0.2",
